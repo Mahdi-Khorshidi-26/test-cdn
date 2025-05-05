@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up Node.js
@@ -17,11 +17,13 @@ jobs:
         with:
           node-version: 16
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: npm install
+        working-directory: builder
 
-      - name: Build Project
+      - name: Build project
         run: npm run build
+        working-directory: builder
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
