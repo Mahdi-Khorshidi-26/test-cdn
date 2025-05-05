@@ -1,0 +1,43 @@
+<div class="">
+  {% paginate search.results by 10 %}
+    <h1 class="">Search Results</h1>
+
+    <div class="">
+      <form action="{{ routes.search_url }}" method="get" class="">
+        <input
+          type="search"
+          name="q"
+          placeholder="Search"
+          value="{{ search.terms | escape }}"
+          class=""
+        >
+
+        <button type="submit" class="">Search</button>
+      </form>
+    </div>
+    {% if search.performed %}
+      {% if search.results.size > 0 %}
+        <div class="">
+          <p class="">{{ search.results.size }} results for the search term {{ search.terms | escape }}</p>
+          <div class="">
+            {% for item in search.results %}
+              {% case item.object_type %}
+                {% when 'product' %}
+                  {% render 'product-card', product_product: item %}
+                {% else %}
+
+              {% endcase %}
+            {% endfor %}
+          </div>
+        </div>
+
+      {% else %}
+        <div class="">
+          <p>No results found for the search term: {{ search.terms | escape }}. Try to use a different keyword</p>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% render 'pagination', pagination: paginate %}
+  {% endpaginate %}
+</div>

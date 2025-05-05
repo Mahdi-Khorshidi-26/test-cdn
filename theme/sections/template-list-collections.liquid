@@ -1,0 +1,51 @@
+<div class="">
+  <h1 class="">{{ section.settings.title }}</h1>
+
+  <div class="">
+    <div class="">
+      {% for collection in collections %}
+        {% if collection.all_products_count > 0 %}
+          <div class="">
+            <div class="">
+              <a href="{{ collection.url }}">
+                <div class="">
+                  {% if collection.featured_image != blank %}
+                    {% assign collection_image = collection.featured_image %}
+                  {% else %}
+                    {% assign collection_image = collection.products.first.image %}
+                  {% endif %}
+
+                  <img
+                    class=""
+                    src="{{ collection_image.src | image_url }}"
+                    alt="{{ collection.title | escape }}"
+                    width=""
+                    height=""
+                  >
+                </div>
+              </a>
+
+              <div class="">
+                <h1 class="">{{ collection.title }}</h1>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Template List Collections",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Collections",
+      "label": "Title"
+    }
+  ]
+}
+{% endschema %}

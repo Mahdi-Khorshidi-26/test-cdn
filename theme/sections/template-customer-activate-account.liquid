@@ -1,0 +1,49 @@
+<div class="">
+  <div class="">
+    <div>
+      <h1 class="">Activate account</h1>
+      <p class="">Create your password to activate your account</p>
+    </div>
+
+    <div>
+      {% form 'activate_customer_password', class: 'space-y-4', id: 'activate_account_form' %}
+        {% if form.errors %}
+          <div class="" role="alert">
+            <strong class="">Error!</strong>
+            <span class="">
+              {{ form.errors | default_errors }}
+            </span>
+          </div>
+        {% endif %}
+        <div>
+          <label for="password">Password</label>
+          <input
+            type="password"
+            name="customer[password]"
+            id="password"
+            placeholder="New password"
+            class=""
+            autocomplete="new-password"
+          >
+        </div>
+
+        <div>
+          <label for="confirm_password">Confirm password</label>
+          <input
+            type="password"
+            name="customer[password_confirmation]"
+            id="confirm_password"
+            placeholder="Confirm your password"
+            class=""
+            autocomplete="new-password"
+          >
+        </div>
+
+        <div class="">
+          <button type="submit" class="">Activate account</button>
+          <button type="submit" name="decline" class="">Decline invitation</button>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</div>

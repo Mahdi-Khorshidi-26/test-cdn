@@ -1,0 +1,222 @@
+<article class="" itemscope itemtype="https://schema.org/BlogPosting">
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'article_title' %}
+        <div class="">
+          <div class="">
+            <a href="{{ blog.url }}" class="">
+              {{ blog.title }}
+            </a>
+            <h1 class="" itemprop="headline">{{ article.title }}</h1>
+          </div>
+        </div>
+
+      {% when 'article_author' %}
+        <div class="">
+          <div class="" itemscope itemtype="https://schema.org/Person">
+            {% if section.settings.enable_author %}
+              <small itemprop="author">{{ article.author }}</small>
+            {% endif %}
+          </div>
+        </div>
+
+      {% when 'article_published_date' %}
+        <div class="">
+          <div class="">
+            {% if section.settings.enable_published_date %}
+              <time itemprop="datePublished dateCreated" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                {{ article.published_at | date: format: 'on_date' }}
+              </time>
+            {% endif %}
+          </div>
+        </div>
+
+      {% when 'featured_image' %}
+        <div itemprop="image" class="">
+          {% if article.image != blank %}
+            <img class="" src="{{ article.image.src | image_url}}" alt="{{ article.image.alt }}" width="" height="">
+          {% else %}
+            {% assign placeholder_image = 'lifestyle-2' %}
+            {{ placeholder_image | placeholder_svg_tag: 'w-full h-80 md:h-96 object-cover object-center p-5' }}
+          {% endif %}
+        </div>
+
+      {% when 'article_content' %}
+        <div class="">
+          <div itemprop="articleBody" class="">
+            {{ article.content }}
+          </div>
+        </div>
+    {% endcase %}
+  {% endfor %}
+</article>
+
+{% if blog.comments_enabled? %}
+  <div id="comments" class="">
+    {% if article.comments_count > 0 %}
+      <div class="">
+        <h1 class="">See what people are saying</h1>
+        {% paginate article.comments by 5 %}
+          {% for comment in article.comments %}
+            <div class="">
+              <span class="">{{ comment.author }}</span>
+              <span class="">{{ comment.created_at | date: format: 'default' }}</span>
+              <p class="">{{ comment.content }}</p>
+            </div>
+          {% endfor %}
+          <div class="">
+            {% render 'pagination', pagination: paginate %}
+          </div>
+        {% endpaginate %}
+      </div>
+
+    {% else %}
+      There are no comments in this article
+    {% endif %}
+  </div>
+
+  <div id="comment_form" class="">
+    {% form 'new_comment', article %}
+      <div class="">
+        {% if form.errors %}
+          oh no!Your comment was not posted
+          <div class="">
+            <div class="">
+              <div class="">
+                {% render 'icon-failed' %}
+              </div>
+              <div class="">Oh no!Your comment was not posted</div>
+            </div>
+            <ul class="">
+              {% for error in form.errors %}
+                <li>
+                  <span>{{ form.errors.messages[error] }}</span>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+
+        {%- elsif form.posted_successfully? %}
+          <div class="">
+            <div class="">
+              {% render 'icon-success' %}
+            </div>
+            <div class="">Comment is posted successfully</div>
+          </div>
+        {%- endif -%}
+        <div class="">
+          <div class="">
+            <label for="comment_author" class="">Name</label>
+            <input
+              type="text"
+              name="comment[author]"
+              id="comment_author"
+              class=""
+              placeholder="Jane Doe"
+              required
+            >
+          </div>
+          <div class="">
+            <label for="comment_email" class="">Email</label>
+            <input
+              type="email"
+              name="comment[email]"
+              id="comment_email"
+              class=""
+              placeholder="jane@doe.com"
+              required
+            >
+          </div>
+        </div>
+        <div class="">
+          <div class="">
+            <label for="comment_content" class="">Comment</label>
+            <textarea class="" name="comment[body]" id="comment_content" required></textarea>
+          </div>
+        </div>
+        <div class="">
+          <div class="">
+            <input type="submit" value="post comment" class="">
+          </div>
+        </div>
+      </div>
+    {% endform %}
+  </div>
+{% endif %}
+
+<script type="application/ld+json">
+  {
+    "@context":"http://schema.org",
+    "@type":"BlogPosting",
+    "headline":{{ article.title | json }},
+    "articleBody":{{ article.content | script_html | json}},
+    {% if article.excerpt != blank %}
+      "description":{{ article.excerpt | script_html| json }},
+
+    {% endif %}
+    {% if article.imsge  %}
+      "image":[
+        {{ article.image | img-url:"medium" | prepend:'https:'|json}}
+      ],
+
+    {% endif %}
+    "datePublished":{{ article.published_at | date: format:"default" |json}},
+    "dateCreated":{{ article.created_at | date: format:"default" |json}},
+    "author":{
+      "@type":"Person",
+      "name":{{ article.author |json }}
+    },
+    "publisher":{
+    "@type":"Organization",
+    "name":{{ shop.name|json }}
+    }
+
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Template Article",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_author",
+      "default": true,
+      "label": "Display Author Name"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_published_date",
+      "default": true,
+      "label": "Display Published Date"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "article_title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "article_author",
+      "name": "Author",
+      "limit": 1
+    },
+    {
+      "type": "article_published_date",
+      "name": "Published Date",
+      "limit": 1
+    },
+    {
+      "type": "featured_image",
+      "name": "Thumbnail",
+      "limit": 1
+    },
+    {
+      "type": "article_content",
+      "name": "Content",
+      "limit": 1
+    }
+  ]
+}
+{% endschema %}

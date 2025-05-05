@@ -1,0 +1,138 @@
+<div class="">
+  <div class="">
+    <div class="">
+      <h1 class="">Order {{ order.name }}</h1>
+      <p class="">Placed on {{ order.created_at | date: format: 'date' }}</p>
+      <span class="">{{ order.financial_status_label }}</span>
+    </div>
+
+    <a href="{{ routes.account_url }}" class="">Back to account</a>
+  </div>
+
+  <div>
+    {% for line_item in order.line_items %}
+      <div class="">
+        <div class="">
+          <div class="">
+            {% if line_item.image %}
+              <img class="" src="{{ line_item.image | image_url }}" alt="{{ line_item.image.alt }}" width="" height="">
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-center object-cover' }}
+            {% endif %}
+          </div>
+
+          <div>
+            <h1 class="">{{ line_item.title | link_to: line_item.product.url }}</h1>
+
+            <table class="">
+              <tbody>
+                <tr>
+                  <td class="">Price</td>
+                  <td class="">{{ line_item.original_price | money }}</td>
+                </tr>
+                <tr>
+                  <td class="">Quantity</td>
+                  <td class="">{{ line_item.quantity }}</td>
+                </tr>
+                <tr>
+                  <td class="">Final price</td>
+                  <td class="">{{ line_item.final_line_price | money }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="">
+              {{ line_item.product.description | truncatewords: 15 }}
+            </div>
+          </div>
+
+          <div>
+            <h1 class="">Delivery address</h1>
+
+            <div class="">
+              <div>
+                <p>Address 1: {{ order.shipping_address.address1 }}</p>
+                <p>Address 2: {{ order.shipping_address.address2 }}</p>
+                <p>Street: {{ order.shipping_address.street }}</p>
+                <p>Province: {{ order.shipping_address.province }}</p>
+                <p>City: {{ order.shipping_address.city }}</p>
+                <p>ZIP: {{ order.shipping_address.zip }}</p>
+                <p>Country: {{ order.shipping_address.country }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="">
+          <h1 class="">Fulfillment</h1>
+
+          {% if line_item.successfully_fulfilled_quantity > 0 %}
+            <p class="">
+              We have fulfilled {{ line_item.successfully_fulfilled_quantity }} items of your recent order.
+            </p>
+            <p class="">Tracking company: {{ line_item.fulfillment.tracking_company }}</p>
+            <p class="">Tracking number: {{ line_item.fulfillment.tracking_number }}</p>
+
+            <a target="_blank" href="{{ line_item.fulfillment.tracking_url }}" class="">
+              Track order <span class="">{% render 'icon-link' %}</span>
+            </a>
+          {% else %}
+            <p class="">This item is not yet fulfilled</p>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="">
+    <div>
+      <h1 class="">Billing address</h1>
+
+      {{ order.billing_address | format_address }}
+    </div>
+    <div>
+      <h1 class="">Payment information</h1>
+
+      {% for transaction in order.transactions %}
+        <div class="">
+          {% assign credit_card_company = transaction.payment_details.credit_card_company %}
+          {% assign credit_card_last_four_digits = transaction.payment_details.credit_card_number %}
+
+          {% if credit_card_company %}
+            <p>{{ credit_card_company }}</p>
+            <p>{{ credit_card_last_four_digits }}</p>
+
+            {% case transaction.status_label %}
+              {% when 'Failure' %}
+                {% assign background = 'red' %}
+              {% else %}
+                {% assign background = 'green' %}
+            {% endcase %}
+
+            <span class="">{{ transaction.status_label }}</span>
+          {% else %}
+            <p class="">This order is manually placed {{ shop.name }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    <div>
+      <table class="">
+        <tbody>
+          <tr>
+            <td class="">Subtotal</td>
+            <td class="">{{ order.subtotal_price | money }}</td>
+          </tr>
+          <tr>
+            <td class="">Shipping</td>
+            <td class="">{{ order.shipping_price | money }}</td>
+          </tr>
+          <tr>
+            <td class="">Total</td>
+            <td class="">{{ order.total_price | money }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

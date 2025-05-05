@@ -1,0 +1,100 @@
+<div class="" x-data="{ loginForm: true, pwRecoverForm: false }">
+  <div x-show="loginForm" class="">
+    <div>
+      <h1 class="">Sign in to your account</h1>
+    </div>
+    <div class="">
+      {% form 'customer_login' %}
+        {% if form.errors %}
+          <div class="" role="alert">
+            <strong class="">Error!</strong>
+            <p class="">{{ form.errors | default_errors }}</p>
+          </div>
+        {% endif %}
+
+        <div class="">
+          <label for="email_address" class="">Email address</label>
+          <input
+            type="email"
+            name="customer[email]"
+            id="email_address"
+            autocomplete="email"
+            class=""
+            placeholder="Email address"
+          >
+        </div>
+
+        {% if form.password_needed %}
+          <div class="">
+            <label for="password" class="">Password</label>
+            <input
+              type="password"
+              name="customer[password]"
+              id="password"
+              autocomplete="current-password"
+              class=""
+              placeholder="Password"
+            >
+          </div>
+        {% endif %}
+
+        <div class="">
+          <a x-on:click="loginForm = false; pwRecoverForm = true" href="#" class=""> Forgot your password? </a>
+        </div>
+        <div>
+          <button type="submit" class="">Sign in</button>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+
+  {% if shop.checkout.guest_login %}
+    <hr class="">
+
+    <div>
+      <h1 class="">Continue as a guest</h1>
+    </div>
+
+    {% form 'guest_login' %}
+      <div><button type="submit" class="">Continue</button>1</div>
+    {% endform %}
+  {% endif %}
+</div>
+<div x-show="pwRecoverForm" class="">
+  <div></div>
+  <div x-show="pwRecoverForm" class="">
+    <div>
+      <h1 class="">Recover your password</h1>
+    </div>
+    <div class="">
+      {% form 'recover_customer_password' %}
+        {% if form.errors %}
+          <div class="" role="alert">
+            <strong class="">Error!</strong>
+            <p class="">{{ form.errors | default_errors }}</p>
+          </div>
+        {% endif %}
+
+        <div class="">
+          <label for="email" class="">Email address</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            autocomplete="email"
+            class=""
+            placeholder="Email address"
+          >
+        </div>
+
+        <div>
+          <button type="submit" class="">Recover password</button>
+        </div>
+
+        <div class="">
+          <a x-on:click="loginForm = true; pwRecoverForm = false" href="#" class="">Back to login</a>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</div>

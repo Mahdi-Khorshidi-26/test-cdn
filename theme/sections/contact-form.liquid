@@ -1,0 +1,76 @@
+<div class="">
+  {% if section.settings.title != blank %}
+    <h1 class="">{{ section.settings.title }}</h1>
+  {% endif %}
+
+  {% form 'contact' %}
+    {% if form.errors %}
+      <div class="">
+        <div class="">
+          <div class="">
+            {% render 'icon-failed' %}
+          </div>
+          <div class="">Oh no! Your message is not sent</div>
+        </div>
+        <ul class="">
+          {% for error in form.errors %}
+            <li>
+              <span>{{ form.errors.messages[error] }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% elsif form.posted_successfully? %}
+      <div class="">
+        <div class="">
+          {% render 'icon-success' %}
+        </div>
+        <div class="">Your message is sent successfully</div>
+      </div>
+    {% endif %}
+
+    <div class="">
+      <div class="">
+        <div class="">
+          <label class="" for="contact_name">Name</label>
+          <input class="" type="text" name="contact[name]" id="contact_name">
+        </div>
+        <div class="">
+          <label class="" for="contact_email">Email address</label>
+          <input class="" type="email" name="contact[email]" id="contact_email">
+        </div>
+      </div>
+
+      <div class="">
+        <div class="">
+          <label class="" for="contact_message">Message</label>
+          <textarea class="" name="contact[body]" id="contact_message"></textarea>
+        </div>
+      </div>
+
+      <div class="">
+        <div class="">
+          <input type="submit" class="" value="Submit message">
+        </div>
+      </div>
+    </div>
+  {% endform %}
+</div>
+
+{% schema %}
+{
+  "name": "Contact Form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Form"
+    }
+  ]
+}
+{% endschema %}

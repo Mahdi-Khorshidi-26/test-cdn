@@ -1,0 +1,170 @@
+{% liquid
+  if section.settings.menu.links == blank
+    assign main_menu_linklist = linklists[section.settings.menu].links
+  else
+    assign main_menu_linklist = section.settings.menu.links
+  endif
+%}
+
+<div class="" x-data="{ mobileMenuOpen: false, searchBarOpen: false } ">
+  <div class="">
+    <div class="">
+      <!-- STORE NAME / STORE LOGO -->
+      <div class="">
+        <h1 class="">{{ shop.name }}</h1>
+      </div>
+
+      <div class="">
+        <button x-on:click="mobileMenuOpen = true" type="button" class="">
+          {% render 'icon-menu' %}
+        </button>
+      </div>
+      <!-- NAVIGATION MENU -->
+      <nav class="">
+        {% for link in main_menu_linklist %}
+          {% if link.links != blank %}
+            {% assign link_handle = link.handle | replace: '-', '_' %}
+            <div class="" x-data="{ {{ link_handle }}: false }">
+              <button type="button" x-on:click="{{ link_handle }} = ! {{ link_handle }}" class="">
+                {{ link.title }}
+                {% render 'icon-dropdown' %}
+              </button>
+
+              <div
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-3"
+                x-transition:enter-end="opacity-100 translate-y-0"
+                x-transition:leave="transition ease-out duration-300"
+                x-transition:leave-start="opacity-100 translate-y-0"
+                x-transition:leave-end="opacity-0 translate-y-3"
+                x-show="{{ link_handle }}"
+                @click.away="{{ link_handle }} = false"
+                class=""
+              >
+                <div class="">
+                  <div class="">
+                    {% for childlink in link.links %}
+                      <a href="{{ childlink.url }}" class="">
+                        <div class="">
+                          <p class="">
+                            {{ childlink.title }}
+                          </p>
+                        </div>
+                      </a>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% else %}
+            <a href="{{ link.url }}" class="">{{ link.title }}</a>
+          {% endif %}
+        {% endfor %}
+      </nav>
+      <!-- CART BUTTON / ACCOUNT LINKS IF ENABLED -->
+      <div class="">
+        <button x-on:click="searchBarOpen = true" type="button" class="">
+          {% render 'icon-search' %}
+        </button>
+        <a href="{{ routes.cart_url }}" class="">
+          {% render 'icon-shopping-bag' %}
+        </a>
+
+        {% if shop.customer_accounts_enabled %}
+          {% if customer %}
+            <a href="{{ routes.account_url }}" class="">account</a>
+            {{ 'Log out' | customer_logout_link | replace: '<a', '<a class=""' }}
+          {% else %}
+            {{ 'Log in ' | customer_login_link | replace: '<a', '<a class=""' }}
+            {{ 'Register' | customer_register_link | replace: '<a', '<a class=""' }}
+          {% endif %}
+        {% endif %}
+      </div>
+
+      <!-- MOBILE MENU CONTAINER -->
+      <div x-show="mobileMenuOpen" class="">
+        <div class="">
+          <div class="">
+            <!-- MOBILE MENU HEADER TITLE PLUS CLOSE BUTTON -->
+
+            <div class="">
+              <div>
+                <h1 class="">{{ section.settings.mobile_menu_title }}</h1>
+              </div>
+              <div class="">
+                <button x-on:click="mobileMenuOpen = false" type="button" class="">
+                  {% render 'icon-close' %}
+                </button>
+              </div>
+            </div>
+
+            <!-- NAVIGATION LINKS FOR MOBILE MENU -->
+            <div class="">
+              <nav class="">
+                {% for link in main_menu_linklist %}
+                  {% if link.links != blank %}
+                    {% assign mobile_link_handle = link.handle | replace: '-', '_' %}
+                    <div class="" x-data="{ {{ mobile_link_handle }}: false }">
+                      <button x-on:click="{{ mobile_link_handle }} = ! {{ mobile_link_handle }}" type="button" class="">
+                        <div>{{ link.title }}</div>
+                        {% render 'icon-dropdown' %}
+                      </button>
+
+                      <div x-show="{{ mobile_link_handle }}" class="">
+                        {% for childlink in link.links %}
+                          <a href="{{ childlink.url }}" class="">
+                            <span class="">{{ childlink.title }}</span>
+                          </a>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  {% else %}
+                    <a href="{{ link.url }}" class="">
+                      {{ link.title }}
+                    </a>
+                  {% endif %}
+                {% endfor %}
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div x-show="searchBarOpen" class="">
+    <button type="button" x-on:click="searchBarOpen = false" class="">
+      {% render 'icon-close' %}
+    </button>
+    <div class="">
+      <form action="{{ routes.search_url }}" method="get" class="">
+        <div class="">
+          <input type="search" name="q" placeholder="Search" class="">
+          <button type="submit" class="">
+            {% render 'icon-search' %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "mobile_menu_title",
+      "default": "Menu",
+      "label": "Mobile Menu Title"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Heading Navigation Menu"
+    }
+  ]
+}
+{% endschema %}

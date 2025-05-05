@@ -1,0 +1,173 @@
+:root {
+  /* -------------------------------- base colors ------------------------------- */
+  /* Neutral */
+  --color-neutral-100: #ededed;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-500: #7b7979;
+  --color-neutral-700: #7b7979;
+  --color-neutral-900: #4f4c4d;
+  --color-neutral-off-white: var(--color-neutral-100);
+  --color-neutral-black: #000;
+  --color-neutral-white: #fff;
+
+  /* Primary */
+  --color-primary-100: #ebf2f1;
+  --color-primary-300: #e6e9ec;
+  --color-primary-500: #99aab1;
+  --color-primary-700: #4e6670;
+  --color-primary-800: #3c4f57;
+  --color-primary-900: #223239;
+  --color-primary: var(--color-primary-500);
+
+  /* Danger */
+  --color-danger-100: #f9e1e1;
+  --color-danger-300: #eb9494;
+  --color-danger-500: #da3b3b;
+  --color-danger-700: #b23838;
+  --color-danger-900: #802828;
+  --color-danger: var(--color-danger-500);
+
+  /* Warning */
+  --color-warning-100: #fff0d2;
+  --color-warning-300: #ffe4ae;
+  --color-warning-500: #ffcb66;
+  --color-warning-700: #d28b00;
+  --color-warning-900: #996500;
+  --color-warning: var(--color-warning-500);
+
+  /* Sale */
+  --color-sale-100: #feefe3;
+  --color-sale-300: #f8cca6;
+  --color-sale-500: #eb954a;
+  --color-sale-700: #cd6f1d;
+  --color-sale-900: #7c4616;
+  --color-sale: var(--color-sale-500);
+
+  /* Secondary */
+  --color-secondary-primary: #45130f;
+
+  /* --------------------------------- Buttons --------------------------------- */
+
+  /* Primary Button */
+  /* Default */
+  --color-button-primary-bg-default: var(--color-primary-700);
+  --color-button-primary-stroke-default: var(--color-button-primary-bg-default);
+  --color-button-primary-text-default: var(--color-neutral-white);
+  /* Hover */
+  --color-button-primary-bg-hover: var(--color-primary-800);
+  --color-button-primary-stroke-hover: var(--color-button-primary-bg-hover);
+  --color-button-primary-text-hover: var(--color-button-primary-text-default);
+  /* Active */
+  --color-button-primary-bg-press: var(--color-primary-900);
+  --color-button-primary-stroke-press: var(--color-button-primary-bg-press);
+  --color-button-primary-text-press: var(--color-button-primary-text-hover);
+  /* Disabled */
+  --color-button-primary-bg-disabled: var(--color-neutral-100);
+  --color-button-primary-stroke-disabled: var(
+    --color-button-primary-bg-disabled
+  );
+  --color-button-primary-text-disabled: var(--color-neutral-700);
+
+  /* Secondary Button */
+  /* Default */
+  --color-button-secondary-bg-default: var(--color-neutral-white);
+  --color-button-secondary-stroke-default: var(--color-neutral-500);
+  --color-button-secondary-text-default: var(--color-neutral-900);
+  /* Hover */
+  --color-button-secondary-bg-hover: var(--color-neutral-100);
+  --color-button-secondary-stroke-hover: var(
+    --color-button-secondary-stroke-default
+  );
+  --color-button-secondary-text-hover: var(
+    --color-button-secondary-text-default
+  );
+  /* Active */
+  --color-button-secondary-bg-press: var(--color-neutral-500);
+  --color-button-secondary-stroke-press: var(--color-button-secondary-bg-press);
+  --color-button-secondary-text-press: var(--color-button-secondary-text-hover);
+  /* Disabled */
+  --color-button-secondary-bg-disabled: var(--color-neutral-100);
+  --color-button-secondary-stroke-disabled: var(
+    --color-button-secondary-bg-disabled
+  );
+  --color-button-secondary-text-disabled: var(--color-neutral-500);
+
+  /* Danger Button */
+  /* Default */
+  --color-button-danger-bg-default: var(--color-danger-500);
+  --color-button-danger-stroke-default: var(--color-button-danger-bg-default);
+  --color-button-danger-text-default: var(--color-neutral-white);
+  /* Hover */
+  --color-button-danger-bg-hover: var(--color-danger-700);
+  --color-button-danger-stroke-hover: var(--color-button-danger-bg-hover);
+  --color-button-danger-text-hover: var(--color-button-danger-text-default);
+  /* Active */
+  --color-button-danger-bg-press: var(--color-danger-900);
+  --color-button-danger-stroke-press: var(--color-button-danger-bg-press);
+  --color-button-danger-text-press: var(--color-button-danger-text-default);
+  /* Disabled */
+  --color-button-danger-bg-disabled: var(--color-danger-100);
+  --color-button-danger-stroke-disabled: var(--color-button-danger-bg-disabled);
+  --color-button-danger-text-disabled: var(--color-danger-300);
+
+  /* Primary Link button */
+  --color-button-link-primary-text-default: var(--color-primary-700);
+  /* Hover */
+  --color-button-link-primary-text-hover: var(--color-primary-800);
+  --color-button-link-primary-bg-hover: var(--color-primary-100);
+  /* Active */
+  --color-button-link-primary-text-press: var(--color-primary-900);
+  --color-button-link-primary-bg-press: var(--color-primary-500);
+  /* Disabled */
+  --color-button-link-primary-text-disabled: var(--color-neutral-500);
+
+  /* Secondary Link button */
+  --color-button-link-secondary-text-default: var(--color-neutral-900);
+  /* Hover */
+  --color-button-link-secondary-text-hover: var(--color-neutral-900);
+  --color-button-link-secondary-bg-hover: var(--color-neutral-100);
+  /* Active */
+  --color-button-link-secondary-text-press: var(--color-neutral-black);
+  --color-button-link-secondary-bg-press: var(--color-neutral-500);
+  /* Disabled */
+  --color-button-link-secondary-text-disabled: var(--color-neutral-500);
+
+  /* Danger Link button */
+  --color-button-link-danger-text-default: var(--color-danger-500);
+  /* Hover */
+  --color-button-link-danger-text-hover: var(--color-danger-700);
+  --color-button-link-danger-bg-hover: var(--color-danger-100);
+  /* Active */
+  --color-button-link-danger-text-press: var(--color-danger-900);
+  --color-button-link-danger-bg-press: var(--color-danger-500);
+  /* Disabled */
+  --color-button-link-danger-text-disabled: var(--color-danger-100);
+
+  /* Icon Buttons */
+  /* Primary Icon button */
+  --color-icon-button-primary-default: var(--color-primary-700);
+  --color-icon-button-primary-hover: var(--color-primary-800);
+  --color-icon-button-primary-press: var(--color-primary-900);
+  --color-icon-button-primary-disabled: var(--color-neutral-300);
+  /* Secondary Icon Button */
+  --color-icon-button-secondary-border: var(--color-neutral-500);
+  --color-icon-button-secondary-default: var(--color-neutral-700);
+  --color-icon-button-secondary-hover: var(--color-neutral-900);
+  --color-icon-button-secondary-press: var(--color-neutral-black);
+  --color-icon-button-secondary-disabled: var(--color-neutral-300);
+  /* Danger Icon Button */
+  --color-icon-button-danger-default: var(--color-danger-500);
+  --color-icon-button-danger-hover: var(--color-danger-700);
+  --color-icon-button-danger-press: var(--color-danger-900);
+  --color-icon-button-danger-disabled: var(--color-danger-100);
+
+  /* --------------------------------- sizes ------------------------------- */
+  --spacing-0-5: 0.4rem;
+  --spacing-1: 0.8rem;
+  --spacing-1-5: 1.2rem;
+  --spacing-2: 1.6rem;
+  --spacing-3: 2.4rem;
+  --spacing-4: 3.2rem;
+  --spacing-5: 4rem;
+  --spacing-6: 4.8rem;
+}

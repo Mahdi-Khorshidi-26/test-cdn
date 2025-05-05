@@ -1,0 +1,32 @@
+<div class="">
+  <a href="{{ routes.collections_url }}" class="">Go back to collections</a>
+  {% paginate collection.products by section.settings.number_of_products_per_page %}
+    <h1 class="">{{ collection.title }}</h1>
+
+    <div class="">
+      <div class="">
+        {% for product in collection.products %}
+          {% render 'product-card', product_product: product %}
+        {% else %}
+          <p>There are no products inside of this collection</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% render 'pagination', pagination: paginate %}
+  {% endpaginate %}
+</div>
+
+{% schema %}
+{
+  "name": "Template Collection",
+  "settings": [
+    {
+      "type": "number",
+      "id": "number_of_products_per_page",
+      "default": 6,
+      "label": "Number of products per page"
+    }
+  ]
+}
+{% endschema %}

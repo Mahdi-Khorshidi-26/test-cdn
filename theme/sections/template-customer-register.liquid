@@ -1,0 +1,79 @@
+<div class="">
+  <div class="">
+    <div>
+      <h1 class="">Register an account</h1>
+    </div>
+    <div class="">
+      {% form 'create_customer' %}
+        {% if form.errors %}
+          <div class="" role="alert">
+            <strong class="">Error!</strong>
+            <p class="">{{ form.errors | default_errors }}</p>
+          </div>
+        {% endif %}
+
+        <div class="">
+          <label for="first_name" class="">First name</label>
+          <input
+            type="text"
+            name="customer[first_name]"
+            id="first_name"
+            autocomplete="given-name"
+            class=""
+            placeholder="First name"
+          >
+        </div>
+
+        <div class="">
+          <label for="last_name" class="">Last name</label>
+          <input
+            type="text"
+            name="customer[last_name]"
+            id="last_name"
+            autocomplete="family-name"
+            class=""
+            placeholder="Last name"
+          >
+        </div>
+
+        <div class="">
+          <label for="birthday" class="">Birthday</label>
+          <input
+            type="date"
+            name="customer[note][Birthday]"
+            id="birthday"
+            class=""
+          >
+        </div>
+
+        <div class="">
+          <label for="email_address" class="">Email address</label>
+          <input
+            type="email"
+            name="customer[email]"
+            id="email_address"
+            autocomplete="email"
+            class=""
+            placeholder="Email address"
+          >
+        </div>
+
+        <div class="">
+          <label for="password" class="">Password</label>
+          <input
+            type="password"
+            name="customer[password]"
+            id="password"
+            autocomplete="new-password"
+            class=""
+            placeholder="Password"
+          >
+        </div>
+
+        <div>
+          <button type="submit" class="">Create account</button>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</div>
